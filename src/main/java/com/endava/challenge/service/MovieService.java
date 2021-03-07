@@ -2,10 +2,11 @@ package com.endava.challenge.service;
 
 import com.endava.challenge.model.Movie;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
+@Service
 public interface MovieService {
 
     Optional<Movie> findById(String id);
