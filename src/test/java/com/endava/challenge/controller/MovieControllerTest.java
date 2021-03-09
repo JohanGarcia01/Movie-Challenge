@@ -61,15 +61,6 @@ class MovieControllerTest {
         movies.add(new Movie("10","title2","overview1","es",1.0,false,"",genres));
     }
 
-
-    @Test
-    void checkIfGivenTitleReturnCorrectNumberMovies() throws Exception{
-        Page<Movie> page =  new PageImpl<Movie>(movies, PageRequest.of(1, 10), movies.size());
-        Mockito.when(movieService.findAllMovies(10, Optional.empty(),Optional.empty(),Optional.of("Title1"),Optional.empty(),Optional.empty(),Optional.empty())).thenReturn(page);
-        String url = "/api/movies/1?title=title1";
-        mockMvc.perform(get(url)).andExpect(status().isOk());
-    }
-
     @Test
     void checkIfGivenIdReturnCorrectMovie() throws Exception{
         List<Genre> genres = new ArrayList<>();
@@ -92,5 +83,13 @@ class MovieControllerTest {
                 .andReturn();
         String message =  result.getResponse().getContentAsString();
         assertEquals(message,"cvs loaded");
+    }
+
+    @Test
+    void checkIfGivenNumberPageReturnCorrectNumberMovies() throws Exception{
+        Page<Movie> page =  new PageImpl<Movie>(movies, PageRequest.of(1, 10), movies.size());
+        Mockito.when(movieService.findAllMovies(10, Optional.empty(),Optional.empty(),Optional.of("Title1"),Optional.empty(),Optional.empty(),Optional.empty())).thenReturn(page);
+        String url = "/api/movies/1?title=title1";
+        mockMvc.perform(get(url)).andExpect(status().isOk());
     }
 }

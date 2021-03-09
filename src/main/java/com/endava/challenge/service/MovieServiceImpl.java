@@ -48,10 +48,10 @@ public class MovieServiceImpl implements MovieService{
 
     @Override
     public void saveMovie() {
-        List<Movie> movies = CvsReader.convertFileToTargetObject("movies_metadata.csv",Movie.class);
-        movies.forEach(Movie::buildGenres);
+        List<Movie> cvsMovies = CvsReader.convertFileToTargetObject("movies_metadata.csv",Movie.class);
+        cvsMovies.forEach(Movie::buildGenres);
         ExecutorService executorService = Executors.newFixedThreadPool(10);
-        movies.forEach(x -> executorService.submit(() -> { movieRepository.save(x);}));
+        cvsMovies.forEach(x -> executorService.submit(() -> { movieRepository.save(x);}));
     }
 
     public Page<Movie> findPaginated(Pageable pageable, List<Movie> movies) {
